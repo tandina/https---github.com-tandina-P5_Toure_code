@@ -1,6 +1,6 @@
 let productSection = document.querySelector("#cart__items");
 let cartItems = JSON.parse(localStorage.getItem('products'));
-let cartFormOrder = document.querySelector('.cart__order__form');
+let cartOrder = document.querySelector('.cart__order__form');
 let totalPrice = document.querySelector('#totalPrice');
 let totalQuantity = document.querySelector('#totalQuantity');
 let totalArticle = [];
@@ -129,92 +129,88 @@ if (cartItems !== null) {
     const regexForAddress = /^([0-9]{1,3}(([,. ]?){1}[a-zA-Zàâäéèêëïîôöùûüç' ]+))$/;
     const regexForEmail = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     
-    //Vérification du champ prénom
-    firstName.addEventListener('change', e => {
-        if (!firstName.value.match(regexForName)) {
-            firstNameErrorMsg.innerHTML = "le champ prénom est incorecte";
-            firstName.style.border = 'solid 2px red';
-            firstNameErrorMsg.style.color = '#fbbcbc';
-        }else if (firstName.value.match(regexForName)) {
-            firstName.style.border = 'solid 2px #D5FCB4';
-            firstNameErrorMsg.style.color = '#D5FCB4';
-            firstNameErrorMsg.innerHTML = "Valide";
-        }
-    });
-    //Vérification du champ nom
-    lastName.addEventListener('change', e => {
-        if (!lastName.value.match(regexForName)) {
-            lastNameErrorMsg.innerText = "le nom est incorecte";
-            lastName.style.border = 'solid 2px red';
-            lastNameErrorMsg.style.color = '#fbbcbc';
-        }else if (lastName.value.match(regexForName)) {
-            lastName.style.border = 'solid 2px #D5FCB4';
-            lastNameErrorMsg.style.color = '#D5FCB4';
-            lastNameErrorMsg.innerText = "Valide";
-        }
-    });
-    //Vérification du champ adresse
-    address.addEventListener('change', e => {
-        if (!address.value.match(regexForAddress)) {
-            addressErrorMsg.innerHTML = "l'addresse est incorecte";
-            address.style.border = 'solid 2px red';
-            addressErrorMsg.style.color = '#fbbcbc';
-        }else if (address.value.match(regexForAddress)) {
-            address.style.border = 'solid 2px #D5FCB4';
-            addressErrorMsg.style.color = '#D5FCB4';
-            addressErrorMsg.innerHTML = "Valide";
-        }
-    });
-    //Vérification du champ ville
-    city.addEventListener('change', e => {
-        if (!city.value.match(regexForName)) {
-            cityErrorMsg.innerHTML = "la ville est incorecte";
-            city.style.border = 'solid 2px red';
-            cityErrorMsg.style.color = '#fbbcbc';
-        }else if (city.value.match(regexForName)) {
-            city.style.border = 'solid 2px #D5FCB4';
-            cityErrorMsg.style.color = '#D5FCB4';
-            cityErrorMsg.innerHTML = "Valide";
-        }
-    });
-    //Vérification du champ e-mail
-    email.addEventListener('change', e => {
-        if (!email.value.match(regexForEmail)) {
-            emailErrorMsg.innerHTML = "l'email est incorecte";
-            email.style.border = 'solid 2px red';
-            emailErrorMsg.style.color = '#fbbcbc';
-        }else if (email.value.match(regexForEmail)) {
-            email.style.border = 'solid 2px #D5FCB4';
-            emailErrorMsg.style.color = '#D5FCB4';
-            emailErrorMsg.innerHTML = "Valide";
-        }
-    });
-
+// vérification du formulaire
   
     //  double vérification des données champs du formulaire
     //  si toutes les données sont correctes le formulaire est envoyé
     //   sinon la commande ne peut être passée et les données ne seront pas envoyées
    
-    function checkFormValidity() {
-        cartFormOrder.addEventListener("submit", (e) => {
+    function checkValidity() {
+        cartOrder.addEventListener("submit", (e) => {
             e.preventDefault();
-            if (!email.value.match(regexForEmail) ||
-                !city.value.match(regexForName) ||
-                !address.value.match(regexForAddress) ||
-                !lastName.value.match(regexForName) ||
-                !firstName.value.match(regexForName)) {
-            } else{
-                sendCommand();
+            if (formValidation()) {
+               sendCommand();
             }
         });
     }
-    checkFormValidity();
+    checkValidity();
 
     const products = Object.values(cartItems).map((product) => {
         return product.currentProductId;
     });
-   
-    //  envoie au serveur les données du formulaire plus le contenu du panier
+
+    function formValidation() {
+        let isValid = false;
+        if(firstName.value.trim().match(regexForName)){
+            isValid=true;
+            firstName.style.border = 'solid 2px #D5FCB4';
+                firstNameErrorMsg.style.color = '#D5FCB4';
+                firstNameErrorMsg.innerHTML = "Valide";
+        } else{
+            isValid=false;
+            firstNameErrorMsg.innerHTML = "le champ prénom est incorecte";
+                firstName.style.border = 'solid 2px red';
+                firstNameErrorMsg.style.color = '#fbbcbc';
+        }
+        if(lastName.value.trim().match(regexForName)){
+            isValid=true;
+            lastName.style.border = 'solid 2px #D5FCB4';
+            lastNameErrorMsg.style.color = '#D5FCB4';
+            lastNameErrorMsg.innerHTML = "Valide";
+        } else{
+            isValid=false;
+            lastNameErrorMsg.innerHTML = "le champ nom est incorecte";
+            lastName.style.border = 'solid 2px red';
+            lastNameErrorMsg.style.color = '#fbbcbc';
+        }
+        if(address.value.trim().match(regexForAddress)){
+            isValid=true;
+            address.style.border = 'solid 2px #D5FCB4';
+            addressErrorMsg.style.color = '#D5FCB4';
+            addressErrorMsg.innerHTML = "Valide";
+        } else{
+            isValid=false;
+            addressErrorMsg.innerHTML = "le champ address est incorecte";
+            address.style.border = 'solid 2px red';
+            addressErrorMsg.style.color = '#fbbcbc';
+        }
+        if(city.value.trim().match(regexForName)){
+            isValid=true;
+            city.style.border = 'solid 2px #D5FCB4';
+            cityErrorMsg.style.color = '#D5FCB4';
+            cityErrorMsg.innerHTML = "Valide";
+        } else{
+            isValid=false;
+            cityErrorMsg.innerHTML = "le champ ville est incorecte";
+            city.style.border = 'solid 2px red';
+            cityErrorMsg.style.color = '#fbbcbc';
+        }
+        if(email.value.trim().match(regexForName)){
+            isValid=true;
+            email.style.border = 'solid 2px #D5FCB4';
+            emailErrorMsg.style.color = '#D5FCB4';
+            emailErrorMsg.innerHTML = "Valide";
+        } else{
+            isValid=false;
+            emailErrorMsg.innerHTML = "l'email' est incorecte";
+            email.style.border = 'solid 2px red';
+            emailErrorMsg.style.color = '#fbbcbc';
+        }
+    return isValid;    
+    };
+
+  
+    //  envoie au serveur des données de la page panier
     //  une fois la commande passé l'utilisateur est redirigé vers la page de confirmation
     //  le serveur renvoie le numéro de commande
    
@@ -250,7 +246,7 @@ if (cartItems !== null) {
         })
     }
 }else{
-    cartFormOrder.style = 'display: none';
+    cartOrder.style = 'display: none';
     productSection.innerHTML = '<h2 id="title"> Votre panier est vide ! </h2>';
     let title = document.getElementById('title');
     title.style.textAlign = "center";

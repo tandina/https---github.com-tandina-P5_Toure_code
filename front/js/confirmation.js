@@ -3,7 +3,7 @@
 //  créer un objet url à partir de l'url actuelle
 //  à travers le searchParams récupère l'id 
 
-function getOrderId() {
+function getorderId() {
     const urlLoc = window.location.href;
     const url = new URL(urlLoc);
     const urlId = url.searchParams.get("orderId");
@@ -11,7 +11,7 @@ function getOrderId() {
 }
 
 const orderId = document.getElementById('orderId');
-orderId.innerHTML = getOrderId();
+orderId.innerHTML = getorderId();
 
 // Vider le localStorage
 localStorage.clear();

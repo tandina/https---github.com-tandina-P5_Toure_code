@@ -26,7 +26,7 @@ const selectOptions = document.querySelector('select').options;
 selectOptions.add(chooseColor);
 chooseColor.setAttribute('disabled', 'disabled');
 chooseColor.setAttribute('selected', 'true');
-chooseColor.textContent = '--SVP choisissez une couleur--';
+chooseColor.textContent = 'Veuillez choisisir une couleur--';
 
 
 //  récupère les données de l'APi d'un produit grace à son id unique
