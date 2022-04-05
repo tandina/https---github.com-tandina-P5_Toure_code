@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\P5-Dev-Web-Kanap-master\\back"
+		},
+		{
+			"path": "..\\P5-Dev-Web-Kanap-master\\front"
+		},
+		{
+			"path": "P5-Dev-Web-Kanap\\front\\js"
+		}
+	],
+	"settings": {}
+}
