@@ -140,7 +140,7 @@ if (cartItems !== null) {
             e.preventDefault();
             if (formValidation()) {
                sendCommand();
-            }
+            } 
         });
     }
     checkValidity();
@@ -150,9 +150,8 @@ if (cartItems !== null) {
     });
 
     function formValidation() {
-        let isValid = false;
+        let isValid = true;
         if(firstName.value.trim().match(regexForName)){
-            isValid=true;
             firstName.style.border = 'solid 2px #D5FCB4';
                 firstNameErrorMsg.style.color = '#D5FCB4';
                 firstNameErrorMsg.innerHTML = "Valide";
@@ -163,7 +162,6 @@ if (cartItems !== null) {
                 firstNameErrorMsg.style.color = '#fbbcbc';
         }
         if(lastName.value.trim().match(regexForName)){
-            isValid=true;
             lastName.style.border = 'solid 2px #D5FCB4';
             lastNameErrorMsg.style.color = '#D5FCB4';
             lastNameErrorMsg.innerHTML = "Valide";
@@ -174,7 +172,6 @@ if (cartItems !== null) {
             lastNameErrorMsg.style.color = '#fbbcbc';
         }
         if(address.value.trim().match(regexForAddress)){
-            isValid=true;
             address.style.border = 'solid 2px #D5FCB4';
             addressErrorMsg.style.color = '#D5FCB4';
             addressErrorMsg.innerHTML = "Valide";
@@ -185,7 +182,6 @@ if (cartItems !== null) {
             addressErrorMsg.style.color = '#fbbcbc';
         }
         if(city.value.trim().match(regexForName)){
-            isValid=true;
             city.style.border = 'solid 2px #D5FCB4';
             cityErrorMsg.style.color = '#D5FCB4';
             cityErrorMsg.innerHTML = "Valide";
@@ -195,8 +191,7 @@ if (cartItems !== null) {
             city.style.border = 'solid 2px red';
             cityErrorMsg.style.color = '#fbbcbc';
         }
-        if(email.value.trim().match(regexForName)){
-            isValid=true;
+        if(email.value.trim().match(regexForEmail)){
             email.style.border = 'solid 2px #D5FCB4';
             emailErrorMsg.style.color = '#D5FCB4';
             emailErrorMsg.innerHTML = "Valide";

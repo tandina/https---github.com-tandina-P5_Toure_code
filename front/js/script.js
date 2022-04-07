@@ -1,29 +1,31 @@
-// on récupére les données de l'api qui sont stocké dans un json.
-// on intégrele résultat dans un parametre de then et integre le résultat dans les balises html par la string interpolation
-
-
-const productData = document.querySelector('#items');
 const url='http://localhost:3000/api/products';
-fetch('http://localhost:3000/api/products')
-    .then((res) => res.json())
-    .then((product) => product.forEach(product => {
-        productData.innerHTML += `
-            <a href="./product.html?id=${product._id}">
-                <article>
-                    <img src="${product.imageUrl}" alt="${product.altTxt}"/>
-                    <h3 class="productName">${product.name}</h3>
-                    <p class="productDescription">${product.description}</p>
-                </article>
-            </a>
-        `
-    }))
-    .catch(error => {
-        console.log(error);
-    });
-    console.log(fetch);
+const productData = document.querySelector('#items');
+      (async function fetchProducts() {
+        try {
+            // after this line, our function will wait for the `fetch()` call to be settled
+            // the `fetch()` call will either return a Response or throw an error
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+            // after this line, our function will wait for the `response.json()` call to be settled
+            // the `response.json()` call will either return the JSON object or throw an error
+            const products = await response.json();
+            products.forEach(product => {
+                        productData.innerHTML += `
+                            <a href="./product.html?id=${product._id}">
+                                <article>
+                                    <img src="${product.imageUrl}" alt="${product.altTxt}"/>
+                                    <h3 class="productName">${product.name}</h3>
+                                    <p class="productDescription">${product.description}</p>
+                                </article>
+                            </a>
+                        `
+            });
+        }
+        catch(error) {
+          console.error(`Could not get products: ${error}`);
+        }
+      })();
 
-
-
-
-
-
+      
